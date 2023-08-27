@@ -31,7 +31,7 @@ public class MeleeEnemy : Enemy
         foreach (Collider2D damageableObject in hitObjects)
         {
             //StartCoroutine(Wait());
-            if(damageableObject != null) damageableObject.GetComponent<Raft>().ApplyDamage(attackDamage);
+            if(damageableObject != null) damageableObject.GetComponent<RaftHealth>().ApplyDamage(attackDamage);
         }
     }
 }

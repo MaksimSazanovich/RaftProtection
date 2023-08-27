@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -16,32 +12,21 @@ public class Bullet : MonoBehaviour
         rb.velocity = transform.right * speed;
     }
 
-    private void Update()
+    private void OnBecameInvisible()
     {
-        CheckBoundaries();
+        Discativate();
     }
-    private void CheckBoundaries()
-    {
-        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
-
-        if (transform.position.x < -screenBounds.x || transform.position.x > screenBounds.x || transform.position.y < -screenBounds.y || transform.position.y > screenBounds.y)
-        {
-            //Destroy(gameObject);
-            Deactivate();
-        }
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out IDamageable damageable))
         {
             damageable.ApplyDamage(Damage);
             //Destroy(gameObject);
-            Deactivate();
+            Discativate();
         }
     }
 
-    private void Deactivate()
+    private void Discativate()
     {
         gameObject.SetActive(false);
     }

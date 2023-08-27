@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -8,25 +9,33 @@ public class WaveSpawner : MonoBehaviour
     private int currentEnemyIndex;
     private int currentWaveIndex;
     private int enemiesLeftToSpawn;
-    [SerializeField] private GameObject[] spawners;
+    [SerializeField] private Transform[] spawners;
+    [SerializeField] private DiContainer _container;
 
-    private GameObject previousSpawner;
+    [SerializeField] private GameObject[] _enemies;
 
+    [Inject]
+    private void Construct(DiContainer container)
+    {
+        _container = container;
+    }
     private void Start()
     {
         enemiesLeftToSpawn = waves[0].WaveSettings.Length;
 
+        SetEnemyesIndex();
+
         LaunchWave();
     }
 
-    //private void Update()
-    //{
-    //    Debug.Log(currentWaveIndex);
-    //}
+    private void SetEnemyesIndex()
+    {
+        
+    }
 
     private IEnumerator SpawnEnemyInWave()
     {
-        if(enemiesLeftToSpawn > 0)
+        if (enemiesLeftToSpawn > 0)
         {
             yield return new WaitForSeconds(waves[currentWaveIndex].WaveSettings[currentEnemyIndex].SpawnDelay);
             SpawnOneEnemyInWave();
@@ -40,31 +49,40 @@ public class WaveSpawner : MonoBehaviour
                 currentWaveIndex++;
                 enemiesLeftToSpawn = waves[currentWaveIndex].WaveSettings.Length;
                 currentEnemyIndex = 0;
-            Debug.Log("qwert");
+                Debug.Log("qwert");
             }
         }
     }
 
     public void SpawnOneEnemyInWave()
     {
-        waves[currentWaveIndex].WaveSettings[currentEnemyIndex].neededSpawner = spawners[Random.Range(0, spawners.Length - 1)];
-        if (previousSpawner != waves[currentWaveIndex].WaveSettings[currentEnemyIndex].neededSpawner)
-        {
-            previousSpawner = waves[currentWaveIndex].WaveSettings[currentEnemyIndex].neededSpawner;
-            Instantiate(waves[currentWaveIndex].WaveSettings[currentEnemyIndex].Enemy, waves[currentWaveIndex].WaveSettings[currentEnemyIndex].neededSpawner.transform.position, Quaternion.identity);
-            enemiesLeftToSpawn--;
-        }
-        else SpawnOneEnemyInWave();
+        //Instantiate();
+        _container.InstantiatePrefab(waves[currentWaveIndex].WaveSettings[currentEnemyIndex].Enemy, GetSpawnPosition(), Quaternion.identity, transform);
+        enemiesLeftToSpawn--;
     }
 
     public void LaunchWave()
     {
         StartCoroutine(SpawnEnemyInWave());
     }
+
+    private Vector3 GetSpawnPosition()
+    {
+        int index = Random.Range(0, 2);
+        float spawnPositionX;
+        if (index == 0)
+            spawnPositionX = spawners[0].position.x;
+        else
+            spawnPositionX = spawners[2].position.x;
+
+        float spawnPositionY = Random.Range(spawners[0].position.y, spawners[1].position.y);
+
+        return new Vector3(spawnPositionX, spawnPositionY, 0);
+    }
 }
 
 [System.Serializable]
-public class Waves 
+public class Waves
 {
     [SerializeField] private WaveSettings[] waveSettings;
     public WaveSettings[] WaveSettings { get => waveSettings; }
@@ -75,7 +93,12 @@ public class WaveSettings
 {
     [SerializeField] private GameObject enemy;
     public GameObject Enemy { get => enemy; }
-    internal GameObject neededSpawner;
+
     [SerializeField] private float spawnDelay;
     public float SpawnDelay { get => spawnDelay; }
+
+    [SerializeField] private EnemiesTypes _enemy;
+    public EnemiesTypes _Enemy { get => _enemy; }
+
+    [SerializeField] private List<int> count = new() { 0, 0, 0 };
 }

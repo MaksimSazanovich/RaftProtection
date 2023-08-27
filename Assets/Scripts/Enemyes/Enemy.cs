@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 public abstract class Enemy : MonoBehaviour, IDamageable, IEnemy
 {
@@ -22,6 +21,14 @@ public abstract class Enemy : MonoBehaviour, IDamageable, IEnemy
     [SerializeField] protected AI ai;
 
     [SerializeField] private UnityEvent OnHealthEnd;
+
+    private EnemyController _enemyController;
+
+    [Inject]
+    private void Construct(EnemyController enemyController)
+    { 
+        _enemyController = enemyController;
+    }
     protected virtual void Start()
     {
         health = maxHealth;
@@ -36,10 +43,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable, IEnemy
     //    if (health > 0)
     //    {
     //        //if (dazedTime <= 0)
-    //        //    speed = startSpeed;
+    //        //    _speed = startSpeed;
     //        //else
     //        //{
-    //        //    speed = 0;
+    //        //    _speed = 0;
     //        //    dazedTime -= Time.deltaTime;
     //        //}
     //    }
@@ -68,6 +75,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable, IEnemy
         ai.Speed = 0;
         GetComponent<BoxCollider2D>().enabled = false;
         OnHealthEnd.Invoke();
+        _enemyController.RemoveEnemy();
         Destroy(gameObject, 0.1f);
         //StartCoroutine(CoroutineDie());
     }

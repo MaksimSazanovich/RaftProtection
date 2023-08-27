@@ -22,7 +22,7 @@ public class EnemyGun : WeaponBase
             transform.localScale = new Vector3(-1f, -1f, 1f);
         }
 
-        //transform.DOMove(targetPosition, speed).SetSpeedBased().SetEase(Ease.Linear);//.OnComplete(() => Destroy(gameObject));
+        //transform.DOMove(_targetPosition, _speed).SetSpeedBased().SetEase(Ease.Linear);//.OnComplete(() => Destroy(gameObject));
     }
 
     protected virtual void Update()

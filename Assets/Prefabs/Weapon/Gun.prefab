@@ -80,7 +80,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -103,12 +103,16 @@ MonoBehaviour:
   targetPosition: {x: 0, y: 0, z: 0}
   timeBetweenShots: 0
   damage: 1
+  bulletsCount: 0
   gunButton: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
   attackSize: {x: 18, y: 8}
   player: {fileID: 0}
+  OnShot:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1186572686587421042
 GameObject:
   m_ObjectHideFlags: 0

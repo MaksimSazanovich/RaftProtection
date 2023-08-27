@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,7 +21,7 @@ public class Gun : WeaponBase
     private void Awake()
     {
         gunButton.OnClick.AddListener(Rotate);
-        raftPosition = FindObjectOfType<Raft>().transform.position;
+        raftPosition = FindObjectOfType<RaftHealth>().transform.position;
     }
 
     private void Update()

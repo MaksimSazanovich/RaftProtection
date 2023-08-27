@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 public class TargetAndShootAI : AI
 {
@@ -9,6 +8,13 @@ public class TargetAndShootAI : AI
     [SerializeField] private float minimumDistance;
 
     [SerializeField] private UnityEvent OnStop;
+
+    [Inject]
+    private void Constuct(RaftHealth raftHeath)
+    {
+        _targetPosition = raftHeath.gameObject.transform.position;
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -20,10 +26,10 @@ public class TargetAndShootAI : AI
 
     protected virtual void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, targetPosition) < minimumDistance)
+        transform.position = Vector2.MoveTowards(transform.position, _targetPosition, _speed * Time.deltaTime);
+        if (Vector2.Distance(transform.position, _targetPosition) < minimumDistance)
         {
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, -speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, _targetPosition, -_speed * Time.deltaTime);
             OnStop.Invoke();
         }
     }

@@ -1,21 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class RaftHeathBar : MonoBehaviour
 {
-	private Image healhBar;
-	[SerializeField] private Raft raft;
+	private Image _healhBar;
+	private RaftHealth _raftHealth;
+
+	[Inject]
+	private void Construct(RaftHealth raftHealth)
+	{
+		_raftHealth = raftHealth;
+	}
 	private void Start()
 	{
-		healhBar = GetComponent<Image>();
-		healhBar.fillAmount = raft.Maxhealth;
+		_healhBar = GetComponent<Image>();
+		_healhBar.fillAmount = _raftHealth.Maxhealth;
 
     }
 
 	private void Update()
 	{
-		healhBar.fillAmount = raft.Health / raft.Maxhealth;
+		_healhBar.fillAmount = _raftHealth.Health / _raftHealth.Maxhealth;
 	}
 }

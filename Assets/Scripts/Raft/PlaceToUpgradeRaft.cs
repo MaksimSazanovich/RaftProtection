@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
-using UnityEngine.Events;
 using System;
 
 public class PlaceToUpgradeRaft : MonoBehaviour, IPointerDownHandler
@@ -61,10 +58,10 @@ public class PlaceToUpgradeRaft : MonoBehaviour, IPointerDownHandler
 
     private void ShowNewPieces()
     {
-        RaycastHit2D rightHit = Physics2D.Raycast(transform.position + Vector3.right * rayOffset, transform.right, rayDistance, LayerMask.GetMask("Raft"));
-        RaycastHit2D leftHit = Physics2D.Raycast(transform.position - Vector3.right * rayOffset, -transform.right, rayDistance, LayerMask.GetMask("Raft"));
-        RaycastHit2D upHit = Physics2D.Raycast(transform.position + Vector3.up * rayOffset, transform.up, rayDistance, LayerMask.GetMask("Raft"));
-        RaycastHit2D downHit = Physics2D.Raycast(transform.position - Vector3.up * rayOffset, -transform.up, rayDistance, LayerMask.GetMask("Raft"));
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position + Vector3.right * rayOffset, transform.right, rayDistance, raftLayer);
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position - Vector3.right * rayOffset, -transform.right, rayDistance, raftLayer);
+        RaycastHit2D upHit = Physics2D.Raycast(transform.position + Vector3.up * rayOffset, transform.up, rayDistance, raftLayer);
+        RaycastHit2D downHit = Physics2D.Raycast(transform.position - Vector3.up * rayOffset, -transform.up, rayDistance, raftLayer);
 
         //one piece
         if (upHit.collider != null && leftHit.collider != null && downHit.collider != null && rightHit.collider == null)

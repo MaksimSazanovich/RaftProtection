@@ -298,6 +298,18 @@ PrefabInstance:
       propertyPath: patterns.Array.data[2]
       value: 
       objectReference: {fileID: 989939750810252215}
+    - target: {fileID: 6196310760824859804, guid: bbf6f75da7f85434e925eb1a3184d59e, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6196310760824859804, guid: bbf6f75da7f85434e925eb1a3184d59e, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6196310760824859804, guid: bbf6f75da7f85434e925eb1a3184d59e, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: bbf6f75da7f85434e925eb1a3184d59e, type: 3}

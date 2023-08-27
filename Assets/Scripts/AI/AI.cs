@@ -1,15 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using Zenject;
 
 public abstract class AI : MonoBehaviour
 {
-    [SerializeField] protected Vector3 targetPosition;
-    [SerializeField] protected float speed;
-    public float Speed { get => speed; set => speed = value; }
+    protected Vector3 _targetPosition;
+    protected float _speed;
+    public float Speed { get => _speed; set => _speed = value; }
+
+    [SerializeField] protected float _timeToTarget;
+
+    [Inject]
+    protected virtual void Construct(RaftHealth raftHeath)
+    {
+        _targetPosition = raftHeath.transform.localPosition;
+    }
+
     protected virtual void Start()
-	{
-        targetPosition = FindObjectOfType<Raft>().transform.position;
+    {
+        _speed = Vector2.Distance(transform.position, _targetPosition) / _timeToTarget;
     }
 }

@@ -22,8 +22,8 @@ public abstract class WeaponBase : MonoBehaviour, IWeapon
     {
         if (bulletsPool == null)
             bulletsPool = FindObjectOfType<PlayerBulletsPool>();
-        if (bulletsCount > 0)
-            bulletsPool.AddBullets(bulletPrefab, bulletsCount);
+        //if (bulletsCount > 0)
+        //    bulletsPool.AddBullets(bulletPrefab, bulletsCount);S
         bulletPrefab.GetComponent<Bullet>().Damage = damage;
     }
 
