@@ -10,32 +10,45 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5b1b3583403d414098b67b003a97f9d, type: 3}
-  m_Name: Level Config
+  m_Name: Level1
   m_EditorClassIdentifier: 
   _waves:
   - _miniWaves:
     - _groupOfEnemies:
       - _enemy: 0
         _count: 2
-      - _enemy: 1
+      - _enemy: 0
         _count: 1
       _spawnDelay: 0
     - _groupOfEnemies:
-      - _enemy: 1
+      - _enemy: 0
         _count: 2
-      - _enemy: 1
+      - _enemy: 0
         _count: 1
       _spawnDelay: 2
   - _miniWaves:
     - _groupOfEnemies:
-      - _enemy: 2
+      - _enemy: 1
         _count: 2
       - _enemy: 1
         _count: 1
-      _spawnDelay: 0
+      _spawnDelay: 10
     - _groupOfEnemies:
       - _enemy: 1
         _count: 2
       - _enemy: 1
+        _count: 1
+      _spawnDelay: 5
+  - _miniWaves:
+    - _groupOfEnemies:
+      - _enemy: 2
+        _count: 2
+      - _enemy: 2
+        _count: 1
+      _spawnDelay: 10
+    - _groupOfEnemies:
+      - _enemy: 2
+        _count: 2
+      - _enemy: 2
         _count: 1
       _spawnDelay: 2

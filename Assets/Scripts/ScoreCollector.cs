@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,13 +13,13 @@ public class ScoreCollector : MonoBehaviour
     }
 	private void OnEnable()
 	{
-		ObjectScore.OnChanged += ObjectScore_OnChanged;
+		EnemyScore.OnChanged += ObjectScore_OnChanged;
 		PlaceToUpgradeRaft.OnBuyPiece += ObjectScore_OnChanged;
 		PlaceToCreateStationaryWeapon.OnBuyPiece += ObjectScore_OnChanged;
 	}
 	private void OnDisable()
 	{
-		ObjectScore.OnChanged -= ObjectScore_OnChanged;
+		EnemyScore.OnChanged -= ObjectScore_OnChanged;
         PlaceToUpgradeRaft.OnBuyPiece -= ObjectScore_OnChanged;
 		PlaceToCreateStationaryWeapon.OnBuyPiece -= ObjectScore_OnChanged;
     }

@@ -24,11 +24,13 @@ public abstract class Enemy : MonoBehaviour, IDamageable, IEnemy
 
     private EnemyController _enemyController;
 
-    [Inject]
-    private void Construct(EnemyController enemyController)
-    { 
-        _enemyController = enemyController;
-    }
+    //[Inject]
+    //private void Construct(EnemyController enemyController)
+    //{ 
+    //    _enemyController = enemyController;
+    //}
+
+ 
     protected virtual void Start()
     {
         health = maxHealth;
@@ -66,7 +68,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable, IEnemy
         {
             Die();
         }
-
     }
 
     protected abstract void PlayerApplyDamage();
@@ -75,28 +76,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable, IEnemy
         ai.Speed = 0;
         GetComponent<BoxCollider2D>().enabled = false;
         OnHealthEnd.Invoke();
-        _enemyController.RemoveEnemy();
+        //_enemyController.RemoveEnemy();
         Destroy(gameObject, 0.1f);
         //StartCoroutine(CoroutineDie());
     }
-
-    //IEnumerator CoroutineDie()
-    //{
-    //    //animator.SetBool(Names.IsLive, false);
-    //    yield return new WaitForSeconds(.2f);
-    //    //StartCoroutine(InvisibleSprite());
-    //}
-    //IEnumerator InvisibleSprite()
-    //{
-    //    for (float f = 1f; f >= -0.05f; f -= 0.05f)
-    //    {
-    //        Color color = sprite.material.color;
-    //        color.a = f;
-    //        sprite.material.color = color;
-    //        yield return new WaitForSeconds(0.05f);
-    //    }
-    //}
-
-
-
 }

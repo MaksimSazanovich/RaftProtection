@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class NewWaveSpawner : MonoBehaviour
 {
@@ -8,49 +10,61 @@ public class NewWaveSpawner : MonoBehaviour
 
     [SerializeField] private DiContainer _container;
     private EnemyController _enemyController;
+    private WaveTimerButton _waveTimerButton;
 
     [SerializeField] private LevelMapConfig _levelMapConfig;
+    public LevelMapConfig LevelMapConfig  { get => _levelMapConfig; }
 
     [SerializeField] private Transform[] spawners;
 
-    private int _enemiesLeftToSpawn;
-
     private int _currentLevel;
+    public int CurrentLevel { get => _currentLevel; }
+
     private int _currentWave;
+    public int CurrentWave { get => _currentWave; }
+
     private int _currentMiniWave;
+    public int CurrentMiniWave { get => _currentMiniWave; }
+
     private int _currentGroupOfEnemies;
+    public int CurrentGroupOfEnemies { get => _currentGroupOfEnemies; }
 
     [SerializeField] private GameObject[] _enemies;
 
+    public event Action OnNextMiniWave;
+    public event Action OnWaveEnd;
+
     [Inject]
-    private void Construct(DiContainer container, EnemyController enemyController)
+    private void Construct(DiContainer container, EnemyController enemyController, WaveTimerButton waveTimerButton)
     {
         _container = container;
-        _enemyController = enemyController;
+        _waveTimerButton = waveTimerButton;
+        //_enemyController = enemyController;
     }
 
     private void Start()
     {
-        _enemiesLeftToSpawn = GetEnemiesLeftToSpawn();
         StartCoroutine(SpawnEnemyInWave());
     }
 
     private void OnEnable()
     {
-        _enemyController.OnEnemiesAreNull += LaunchWave;
+        //_enemyController.OnEnemiesAreNull += LaunchWave;
+        _waveTimerButton.OnTimerStart += LaunchWave;
+        _waveTimerButton.OnTimerEnd += ResetSpawnDelay;
     }
 
     private void OnDisable()
     {
-        _enemyController.OnEnemiesAreNull -= LaunchWave;
+        //_enemyController.OnEnemiesAreNull -= LaunchWave;
+        _waveTimerButton.OnTimerStart -= LaunchWave;
+        _waveTimerButton.OnTimerEnd -= ResetSpawnDelay;
     }
 
     private IEnumerator SpawnEnemyInWave()
     {
         if (_currentMiniWave <= _levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves.Length - 1)
         {
-            Debug.Log("_currentMiniWave: " + _currentMiniWave);
-            Debug.Log("_levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves.Length - 1: " + (_levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves.Length - 1));
             yield return new WaitForSeconds(_levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves[_currentMiniWave].SpawnDelay);
             SpawnMiniWave();
             Debug.Log("qwert");
@@ -58,7 +72,8 @@ public class NewWaveSpawner : MonoBehaviour
         }
         else
         {
-            Debug.Log("WaveEnd");            
+            Debug.Log("WaveEnd");
+            OnWaveEnd?.Invoke();
         }
     }
 
@@ -73,6 +88,7 @@ public class NewWaveSpawner : MonoBehaviour
             }
             _currentGroupOfEnemies++;
         }
+        OnNextMiniWave?.Invoke();
         _currentMiniWave++;
     }
 
@@ -96,8 +112,7 @@ public class NewWaveSpawner : MonoBehaviour
     {
         //_container.InstantiatePrefab(waves[currentWaveIndex].WaveSettings[currentEnemyIndex].Enemy, GetSpawnPosition(), Quaternion.identity, transform);
         _container.InstantiatePrefab(GetEnemy(_levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves[_currentMiniWave].GroupOfEnemies[_currentGroupOfEnemies].Enemy), GetSpawnPosition(), Quaternion.identity, transform);
-        _enemiesLeftToSpawn--;
-        _enemyController.AddEnemy(GetEnemy(_levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves[_currentMiniWave].GroupOfEnemies[_currentGroupOfEnemies].Enemy));
+        //_enemyController.AddEnemy(GetEnemy(_levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves[_currentMiniWave].GroupOfEnemies[_currentGroupOfEnemies].Enemy));
     }
 
     private void LaunchWave()
@@ -112,6 +127,13 @@ public class NewWaveSpawner : MonoBehaviour
         }
         else
             Debug.Log("Victory!!!");
+    }
+
+    private void ResetSpawnDelay()
+    {
+        StopCoroutine(SpawnEnemyInWave());
+        SpawnMiniWave();
+        Debug.Log("qwert");
     }
     public GameObject GetEnemy(EnemiesTypes enemy)
     {
