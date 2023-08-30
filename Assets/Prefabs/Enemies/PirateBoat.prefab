@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1337e325d3e6512429ec1bffe0d876a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 5
   OnApplyDamage:
     m_PersistentCalls:
       m_Calls:

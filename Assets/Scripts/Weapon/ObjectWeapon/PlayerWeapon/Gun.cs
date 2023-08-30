@@ -16,44 +16,54 @@ public class Gun : WeaponBase
 
     [SerializeField] private UnityEvent OnShot;
 
-
+    [SerializeField] private TouchDetector touchDetector;
 
     private void Awake()
     {
-        gunButton.OnClick.AddListener(Rotate);
+        //gunButton.OnClick.AddListener(Rotate);
         raftPosition = FindObjectOfType<RaftHealth>().transform.position;
+    }
+
+    private void OnEnable()
+    {
+        touchDetector.OnTouch += Rotate;
+    }
+
+    private void OnDisable()
+    {
+        touchDetector.OnTouch -= Rotate;
     }
 
     private void Update()
     {
-        SearchTarget();
+        
     }
 
-    private void SearchTarget()
-    {
-        nearestEnemy = null;
-        nearestEnemyDistance = Mathf.Infinity;
+    //private void SearchTarget()
+    //{
+    //    nearestEnemy = null;
+    //    nearestEnemyDistance = Mathf.Infinity;
 
-        //Collider2D[] hitObjects = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
-        Collider2D[] hitObjects = Physics2D.OverlapBoxAll(raftPosition, attackSize, 0, enemyLayer);      
-        foreach (Collider2D enemy in hitObjects)
-        {
-            currentDistance = Vector2.Distance(transform.position, enemy.GetComponent<Transform>().transform.position);
+    //    //Collider2D[] hitObjects = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
+    //    Collider2D[] hitObjects = Physics2D.OverlapBoxAll(raftPosition, attackSize, 0, enemyLayer);      
+    //    foreach (Collider2D enemy in hitObjects)
+    //    {
+    //        currentDistance = Vector2.Distance(transform.position, enemy.GetComponent<Transform>().transform.position);
 
-            if (currentDistance < nearestEnemyDistance)
-            {
-                nearestEnemy = enemy.GetComponent<Transform>().transform;
-                nearestEnemyDistance = currentDistance;
-            }
-        }
-    }
+    //        if (currentDistance < nearestEnemyDistance)
+    //        {
+    //            nearestEnemy = enemy.GetComponent<Transform>().transform;
+    //            nearestEnemyDistance = currentDistance;
+    //        }
+    //    }
+    //}
 
-    public void Rotate()
+    public void Rotate(Vector3 targetPosition)
     {
         if (Time.time > nextShotTime)
         {
-            if(nearestEnemy != null)
-            targetPosition = nearestEnemy.transform.position;
+            //if(nearestEnemy != null)
+            //targetPosition = nearestEnemy.transform.position;
 
             if (targetPosition.x < 0)
             {
