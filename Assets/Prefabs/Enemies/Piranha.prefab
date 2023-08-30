@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 6916579084850414742}
   - component: {fileID: 7554914261349715206}
   - component: {fileID: 3933394229440724683}
+  - component: {fileID: -8282552340459724592}
   m_Layer: 8
   m_Name: Piranha
   m_TagString: Enemy
@@ -138,7 +139,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.089663506, y: -0.029887855}
+  m_Offset: {x: 0.10335195, y: -0.029887855}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -149,7 +150,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.9041157, y: 0.94770634}
+  m_Size: {x: 1.78092, y: 0.94770634}
   m_EdgeRadius: 0
 --- !u!50 &884428753592416513
 Rigidbody2D:
@@ -222,6 +223,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attackDamage: 2
+  timeBetweenAttacks: 0.5
 --- !u!114 &6916579084850414742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3caf79bddf3dcfa4aa1c33dc755e0186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _agent: {fileID: -8282552340459724592}
   _timeToTarget: 4
 --- !u!95 &3933394229440724683
 Animator:
@@ -268,6 +271,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &-8282552340459724592
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884428753592416517}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.43
+  m_Speed: 3.5
+  m_Acceleration: 1e+9
+  avoidancePriority: 50
+  m_AngularSpeed: 100
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.36
+  m_BaseOffset: 0.18
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 1
 --- !u!1 &3188874960338519534
 GameObject:
   m_ObjectHideFlags: 0

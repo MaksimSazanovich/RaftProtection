@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -4983008419084861931}
   - component: {fileID: 5103122325037145409}
   - component: {fileID: 988988703406250985}
+  - component: {fileID: -5504813132697695654}
   m_Layer: 8
   m_Name: PirateShip
   m_TagString: Enemy
@@ -107,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0524293c784384392c4ecc5dae9f6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _agent: {fileID: -5504813132697695654}
   _timeToTarget: 10
   minimumDistance: 6
   OnStop:
@@ -274,6 +276,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.7461648, y: 3.6131816}
   m_EdgeRadius: 0
+--- !u!195 &-5504813132697695654
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705974984267264349}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.43
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 1
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.36
+  m_BaseOffset: 0.18
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 1
 --- !u!1 &2394657980008997969
 GameObject:
   m_ObjectHideFlags: 0

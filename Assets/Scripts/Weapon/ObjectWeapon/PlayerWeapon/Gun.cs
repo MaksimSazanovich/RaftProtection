@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 public class Gun : WeaponBase
 {
@@ -16,7 +17,13 @@ public class Gun : WeaponBase
 
     [SerializeField] private UnityEvent OnShot;
 
-    [SerializeField] private TouchDetector touchDetector;
+     private TouchDetector touchDetector;
+
+    [Inject]
+    private void Construct(TouchDetector touchDetector)
+    { 
+        this.touchDetector = touchDetector;
+    }
 
     private void Awake()
     {
@@ -41,19 +48,19 @@ public class Gun : WeaponBase
 
     //private void SearchTarget()
     //{
-    //    nearestEnemy = null;
-    //    nearestEnemyDistance = Mathf.Infinity;
+    //    nearestRaftPiece = null;
+    //    nearestRaftPieceDistance = Mathf.Infinity;
 
     //    //Collider2D[] hitObjects = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
-    //    Collider2D[] hitObjects = Physics2D.OverlapBoxAll(raftPosition, attackSize, 0, enemyLayer);      
+    //    Collider2D[] hitObjects = Physics2D.OverlapBoxAll(raftPosition, attackSize, 0, enemyLayer);
     //    foreach (Collider2D enemy in hitObjects)
     //    {
     //        currentDistance = Vector2.Distance(transform.position, enemy.GetComponent<Transform>().transform.position);
 
-    //        if (currentDistance < nearestEnemyDistance)
+    //        if (currentDistance < nearestRaftPieceDistance)
     //        {
-    //            nearestEnemy = enemy.GetComponent<Transform>().transform;
-    //            nearestEnemyDistance = currentDistance;
+    //            nearestRaftPiece = enemy.GetComponent<Transform>().transform;
+    //            nearestRaftPieceDistance = currentDistance;
     //        }
     //    }
     //}
@@ -62,8 +69,8 @@ public class Gun : WeaponBase
     {
         if (Time.time > nextShotTime)
         {
-            //if(nearestEnemy != null)
-            //targetPosition = nearestEnemy.transform.position;
+            //if(nearestRaftPiece != null)
+            //targetPosition = nearestRaftPiece.transform.position;
 
             if (targetPosition.x < 0)
             {

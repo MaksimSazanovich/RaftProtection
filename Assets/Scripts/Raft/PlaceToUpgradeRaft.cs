@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 using System;
+using Zenject;
+using UnityEngine.UIElements;
 
 public class PlaceToUpgradeRaft : MonoBehaviour, IPointerDownHandler
 {
@@ -15,6 +17,7 @@ public class PlaceToUpgradeRaft : MonoBehaviour, IPointerDownHandler
     [SerializeField] private GameObject[] patterns;
 
     public static event Action<int> OnBuyPiece;
+    public static event Action<GameObject> OnInstantiatePiece;
 
     private float rayDistance = 0.02f;
     [SerializeField] private float rayOffset;
@@ -23,15 +26,12 @@ public class PlaceToUpgradeRaft : MonoBehaviour, IPointerDownHandler
     private Transform newParent;
     private GameObject currentPattern;
 
-    public void OnPointerDown(PointerEventData eventData)
+    [SerializeField] private DiContainer container;
+
+    [Inject]
+    private void Construct(DiContainer diContainer)
     {
-        if (ScoreCollector.scoreCollected >= cost)
-        {
-            Instantiate(raftPiecePrefab, transform.position, Quaternion.identity);
-            ShowNewPieces();
-            Destroy(gameObject);
-            OnBuyPiece?.Invoke(-cost);
-        }
+        container = diContainer;
     }
 
     private void Start()
@@ -56,6 +56,17 @@ public class PlaceToUpgradeRaft : MonoBehaviour, IPointerDownHandler
         Debug.DrawRay(transform.position - Vector3.up * rayOffset, -transform.up, Color.yellow);
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (ScoreCollector.scoreCollected >= cost)
+        {
+            GameObject piece = container.InstantiatePrefab(raftPiecePrefab, transform.position, Quaternion.identity, null);
+            OnInstantiatePiece?.Invoke(piece);
+            ShowNewPieces();
+            Destroy(gameObject);
+            OnBuyPiece?.Invoke(-cost);
+        }
+    }
     private void ShowNewPieces()
     {
         RaycastHit2D rightHit = Physics2D.Raycast(transform.position + Vector3.right * rayOffset, transform.right, rayDistance, raftLayer);
@@ -66,69 +77,71 @@ public class PlaceToUpgradeRaft : MonoBehaviour, IPointerDownHandler
         //one piece
         if (upHit.collider != null && leftHit.collider != null && downHit.collider != null && rightHit.collider == null)
         {
-            currentPattern = Instantiate(patterns[8], transform.position, Quaternion.identity);
+            //currentPattern = Instantiate(patterns[8], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[8], transform.position, Quaternion.identity, null);
         }
 
         if (upHit.collider != null && downHit.collider != null && rightHit.collider != null && leftHit.collider == null)
         {
-            currentPattern = Instantiate(patterns[9], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[9], transform.position, Quaternion.identity, null);
         }
 
         if (upHit.collider != null && downHit.collider == null && rightHit.collider != null && leftHit.collider != null)
         {
-            currentPattern = Instantiate(patterns[10], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[10], transform.position, Quaternion.identity, null);
         }
 
         if (upHit.collider == null && downHit.collider != null && rightHit.collider != null && leftHit.collider != null)
         {
-            currentPattern = Instantiate(patterns[11], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[11], transform.position, Quaternion.identity, null);
         }
 
         //diagonal
-        if (downHit.collider != null && leftHit.collider != null && rightHit.collider == null  && upHit.collider == null)
+        if (downHit.collider != null && leftHit.collider != null && rightHit.collider == null && upHit.collider == null)
         {
-            currentPattern = Instantiate(patterns[4], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[4], transform.position, Quaternion.identity, null);
         }
 
         if (downHit.collider != null && rightHit.collider != null && leftHit.collider == null && upHit.collider == null)
         {
-            currentPattern = Instantiate(patterns[5], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[5], transform.position, Quaternion.identity, null);
         }
 
         if (upHit.collider != null && leftHit.collider != null && rightHit.collider == null && downHit.collider == null)
         {
-            currentPattern = Instantiate(patterns[6], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[6], transform.position, Quaternion.identity, null);
         }
 
         if (upHit.collider != null && rightHit.collider != null && leftHit.collider == null && downHit.collider == null)
         {
-            currentPattern = Instantiate(patterns[7], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[7], transform.position, Quaternion.identity, null);
         }
 
         //base patterns
         if (leftHit.collider != null && rightHit.collider == null && upHit.collider == null && downHit.collider == null)
         {
-            currentPattern = Instantiate(patterns[1], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[1], transform.position, Quaternion.identity, null);
         }
 
         if (rightHit.collider != null && leftHit.collider == null && upHit.collider == null && downHit.collider == null)
         {
-            currentPattern = Instantiate(patterns[0], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[0], transform.position, Quaternion.identity, null);
         }
 
 
         if (upHit.collider != null && rightHit.collider == null && leftHit.collider == null && downHit.collider == null)
         {
-            currentPattern = Instantiate(patterns[2], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[2], transform.position, Quaternion.identity, null);
         }
 
         if (downHit.collider != null && rightHit.collider == null && leftHit.collider == null && upHit.collider == null)
         {
-            currentPattern = Instantiate(patterns[3], transform.position, Quaternion.identity);
+            currentPattern = container.InstantiatePrefab(patterns[3], transform.position, Quaternion.identity, null);
         }
 
 
         newParent = FindObjectOfType<RaftPlaces>().transform;
         currentPattern.transform.SetParent(newParent, true);
     }
+
 }

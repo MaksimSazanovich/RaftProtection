@@ -15,16 +15,12 @@ MonoBehaviour:
   _waves:
   - _miniWaves:
     - _groupOfEnemies:
-      - _enemy: 0
-        _count: 2
-      - _enemy: 0
-        _count: 1
-      _spawnDelay: 0
+      - _enemy: 1
+        _count: 4
+      _spawnDelay: 3
     - _groupOfEnemies:
       - _enemy: 0
         _count: 2
-      - _enemy: 0
-        _count: 1
       _spawnDelay: 2
   - _miniWaves:
     - _groupOfEnemies:

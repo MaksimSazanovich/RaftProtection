@@ -26,6 +26,6 @@ public class TouchDetector : MonoBehaviour
         targetPosition = cam.ScreenToWorldPoint(Input.mousePosition);
         targetPosition.z = transform.position.z;
         
-        OnTouch(targetPosition);
+        OnTouch?.Invoke(targetPosition);
     }
 }
