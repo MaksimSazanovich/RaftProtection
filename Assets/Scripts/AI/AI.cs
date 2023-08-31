@@ -15,8 +15,6 @@ public abstract class AI : MonoBehaviour
 
     [SerializeField] protected NavMeshAgent _agent;
 
-    [SerializeField] protected float _timeToTarget;
-
     [Inject]
     protected virtual void Construct(Raft raft)
     {
@@ -74,11 +72,9 @@ public abstract class AI : MonoBehaviour
                 nearestRaftPieceDistance = currentDistance;
             }
         }
-        Debug.Log(_targetPosition);
         Debug.Log(nearestRaftPiece);
         _targetPosition = nearestRaftPiece.position;
-
-        //_agent.speed = Vector2.Distance(transform.position, _targetPosition) / _timeToTarget;
+        Debug.Log(_targetPosition);
 
         return nearestRaftPiece.position;
     }

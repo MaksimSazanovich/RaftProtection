@@ -22,7 +22,7 @@ public class TargetAndShootAI : AI
         transform.position = Vector2.MoveTowards(transform.position, _targetPosition, _agent.speed * Time.deltaTime);
         if (Vector2.Distance(transform.position, _targetPosition) < minimumDistance)
         {
-            transform.position = Vector2.MoveTowards(transform.position, _targetPosition, -_agent.speed * Time.deltaTime);
+            _agent.speed = 0f;
             OnStop.Invoke();
         }
     }

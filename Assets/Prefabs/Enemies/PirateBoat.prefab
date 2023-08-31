@@ -56,11 +56,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105201540527960533}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.11, y: 1.276, z: 0}
+  m_LocalPosition: {x: -0.03, y: 1.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 105201540797770280}
+  m_Children: []
   m_Father: {fileID: 105201540889896125}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -141,14 +140,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105201540797770281}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.42, y: 0.127, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4, y: 1.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 105201540137745023}
-  m_Father: {fileID: 105201540527960532}
-  m_RootOrder: 3
+  m_Father: {fileID: 105201540889896125}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &105201540797770286
 SpriteRenderer:
@@ -216,7 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 105201540137745023}
   bulletPrefab: {fileID: 4922995714440454004, guid: 2b727fa600dcfae43b41e154c30b7875, type: 3}
-  targetPosition: {x: 0, y: 0, z: 0}
+  targetPosition: {x: 0, y: -1.5, z: 0}
   timeBetweenShots: 2
   damage: 3
   bulletsCount: 5
@@ -256,6 +255,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 105201540797770280}
   - {fileID: 105201540527960532}
   - {fileID: 2698108929569126581}
   - {fileID: 6770688149484636324}
@@ -375,7 +375,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: -4745449395265547991}
-  _timeToTarget: 6
   minimumDistance: 6
   OnStop:
     m_PersistentCalls:
@@ -479,7 +478,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.43
-  m_Speed: 3.5
+  m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 1

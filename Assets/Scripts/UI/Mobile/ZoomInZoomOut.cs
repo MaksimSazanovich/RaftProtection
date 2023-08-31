@@ -6,13 +6,13 @@ using UnityEngine;
 public class ZoomInZoomOut : MonoBehaviour
 {
 
-    Camera mainCamera;
+    private Camera mainCamera;
 
-    float touchesPrevPosDifference, touchesCurPosDifference, zoomModifier;
+    private float touchesPrevPosDifference, touchesCurPosDifference, zoomModifier;
 
-    Vector2 firstTouchPrevPos, secondTouchPrevPos;
+    private Vector2 firstTouchPrevPos, secondTouchPrevPos;
 
-    [SerializeField]
+    [SerializeField] private 
     float zoomModifierSpeed = 0.1f;
 
     [SerializeField]
@@ -25,7 +25,7 @@ public class ZoomInZoomOut : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
 
         if (Input.touchCount == 2)

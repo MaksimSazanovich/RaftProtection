@@ -1,5 +1,4 @@
 using NavMeshPlus.Components;
-using UnityEditor.AI;
 using UnityEngine;
 
 public class NavMeshUpdater : MonoBehaviour

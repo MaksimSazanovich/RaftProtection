@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using TMPro;
 using UnityEngine;
 
 public class EnemyGun : WeaponBase
@@ -11,7 +7,7 @@ public class EnemyGun : WeaponBase
     protected override void Start()
     {
         base.Start();
-        targetPosition = new Vector3(0, -1f, 0.7505713f);
+        //targetPosition = new Vector3(0, 0, 0);
         if (transform.position.x < 0)
         {
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, Mathf.Atan2(targetPosition.y - transform.position.y, targetPosition.x - transform.position.x) * Mathf.Rad2Deg);
