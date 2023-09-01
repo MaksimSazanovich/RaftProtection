@@ -1,12 +1,15 @@
 using System;
 
-[Serializable]
-public class Progress
+namespace Internal.Scripts.LocalStorage
 {
-    public int index;
-
-    public Progress(int index)
+    [Serializable]
+    public class Progress
     {
-        this.index = index;
+        public int index;
+
+        public Progress(int index)
+        {
+            this.index = index;
+        }
     }
 }

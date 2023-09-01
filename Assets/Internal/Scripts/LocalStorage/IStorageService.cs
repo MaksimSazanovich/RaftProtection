@@ -11,7 +11,7 @@
 
 using System;
 
-namespace AbyssMoth.Codebase.Infrastructure.Services.Storage
+namespace Internal.Scripts.LocalStorage
 {
     public interface IStorageService
     {

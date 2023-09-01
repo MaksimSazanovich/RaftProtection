@@ -2,25 +2,28 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Raft : MonoBehaviour
+namespace Internal.Scripts.Raft
 {
-	[SerializeField] private List<GameObject> raftPices = new List<GameObject>();
-	public List<GameObject> RaftPices { get => raftPices; }
-
-	public event Action OnAddRaftPiece;
-    private void OnEnable()
+	public class Raft : MonoBehaviour
 	{
-		PlaceToUpgradeRaft.OnInstantiatePiece += AddPiece;
-	}
+		[SerializeField] private List<GameObject> raftPices = new List<GameObject>();
+		public List<GameObject> RaftPices { get => raftPices; }
 
-	private void OnDisable()
-	{
-        PlaceToUpgradeRaft.OnInstantiatePiece -= AddPiece;
-    }
+		public event Action OnAddRaftPiece;
+		private void OnEnable()
+		{
+			PlaceToUpgradeRaft.OnInstantiatePiece += AddPiece;
+		}
 
-	private void AddPiece(GameObject piece)
-	{ 
-		raftPices.Add(piece);
-		OnAddRaftPiece?.Invoke();
+		private void OnDisable()
+		{
+			PlaceToUpgradeRaft.OnInstantiatePiece -= AddPiece;
+		}
+
+		private void AddPiece(GameObject piece)
+		{ 
+			raftPices.Add(piece);
+			OnAddRaftPiece?.Invoke();
+		}
 	}
 }

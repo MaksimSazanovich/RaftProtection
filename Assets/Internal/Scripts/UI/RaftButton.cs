@@ -1,27 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
-public class RaftButton : MonoBehaviour
+namespace Internal.Scripts.UI
 {
-    private bool isActive = false;
-    [SerializeField] private UnityEvent Activate;
-    [SerializeField] private UnityEvent Deactivate;
-
-    public void ChangeState()
+    public class RaftButton : MonoBehaviour
     {
-        if (isActive)
+        private bool isActive = false;
+        [SerializeField] private UnityEvent Activate;
+        [SerializeField] private UnityEvent Deactivate;
+
+        public void ChangeState()
         {
-            Deactivate.Invoke();
-            isActive = false;
-        }
-        else
-        {
-            Activate.Invoke();
-            isActive = true;
+            if (isActive)
+            {
+                Deactivate.Invoke();
+                isActive = false;
+            }
+            else
+            {
+                Activate.Invoke();
+                isActive = true;
+            }
         }
     }
 }

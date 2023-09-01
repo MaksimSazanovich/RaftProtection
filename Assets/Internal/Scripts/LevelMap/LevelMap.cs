@@ -1,40 +1,36 @@
-using AbyssMoth.Codebase.Infrastructure.Services.Storage;
-using System;
+using System.Diagnostics.CodeAnalysis;
+using Internal.Scripts.LocalStorage;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-public class LevelMap : MonoBehaviour
+namespace Internal.Scripts.LevelMap
 {
-	[SerializeField] private Progress progress;
+    [SuppressMessage("ReSharper", "CommentTypo")]
+    public sealed class LevelMap : MonoBehaviour
+    {
+        private const string GameScene = "Game";
 
-	private IStorageService storageService = new JsonToFileStorageService();
+        [SerializeField] private Progress progress;
+        private IStorageService storageService;
 
-    [Inject]
-	private void Construct(IStorageService storageService)
-	{ 
-		this.storageService = storageService;
-	}
+        [Inject]
+        private void Construct(IStorageService storage) =>
+            storageService = storage;
 
-	private void Awake()
-	{
-        print(storageService == null);
+        private void Start() =>
+            storageService.Load<Progress>(SaveKey.LevelIndex, Loaded);
+
+        private void Loaded(Progress data) =>
+            progress = data ?? new Progress(0);
+
+        public void GetIndex(int index)
+        {
+            // Нужно сохранять не значение типа int "progress.index", а объект целиком "progress".
+            storageService.Save(SaveKey.LevelIndex, progress, LoadGameScene);
+        }
+
+        private static void LoadGameScene(bool isSuccessSave) =>
+            SceneManager.LoadScene(GameScene);
     }
-
-	private void Start()
-	{       
-        storageService.Load<Progress>(SaveKey.LevelIndex, Loaded);
-    }
-
-	private void Loaded(Progress progress)
-	{
-        this.progress = progress ?? new Progress(0);
-    }
-
-	public void GetIndex(int index)
-	{
-        if (progress == null) { progress = new Progress(index); } else { progress.index = index; }
-        storageService.Save(SaveKey.LevelIndex, progress.index);
-		SceneManager.LoadScene("Game");
-	}
 }

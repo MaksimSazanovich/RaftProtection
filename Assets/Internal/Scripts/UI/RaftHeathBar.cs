@@ -1,25 +1,29 @@
+using Internal.Scripts.Raft;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class RaftHeathBar : MonoBehaviour
+namespace Internal.Scripts.UI
 {
-	[SerializeField] private Image _healhBar;
-	private RaftHealth _raftHealth;
-
-	[Inject]
-	private void Construct(RaftHealth raftHealth)
+	public class RaftHeathBar : MonoBehaviour
 	{
-		_raftHealth = raftHealth;
-	}
-	private void Start()
-	{
-		_healhBar.fillAmount = _raftHealth.Maxhealth;
+		[SerializeField] private Image _healhBar;
+		private RaftHealth _raftHealth;
 
-    }
+		[Inject]
+		private void Construct(RaftHealth raftHealth)
+		{
+			_raftHealth = raftHealth;
+		}
+		private void Start()
+		{
+			_healhBar.fillAmount = _raftHealth.Maxhealth;
 
-	private void Update()
-	{
-		_healhBar.fillAmount = _raftHealth.Health / _raftHealth.Maxhealth;
+		}
+
+		private void Update()
+		{
+			_healhBar.fillAmount = _raftHealth.Health / _raftHealth.Maxhealth;
+		}
 	}
 }

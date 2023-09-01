@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IDamageable 
+namespace Internal.Scripts.Enemyes
 {
-    void ApplyDamage(int damageValue);
+    public interface IDamageable 
+    {
+        void ApplyDamage(int damageValue);
 
-    void Die();
+        void Die();
+    }
 }

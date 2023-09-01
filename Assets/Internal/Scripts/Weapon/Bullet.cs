@@ -1,33 +1,37 @@
+using Internal.Scripts.Enemyes;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+namespace Internal.Scripts.Weapon
 {
-	[SerializeField] protected float speed;
-	[SerializeField] protected Rigidbody2D rb;
-
-    public int Damage;
-
-    private void FixedUpdate()
+    public class Bullet : MonoBehaviour
     {
-        rb.velocity = transform.right * speed;
-    }
+        [SerializeField] protected float speed;
+        [SerializeField] protected Rigidbody2D rb;
 
-    private void OnBecameInvisible()
-    {
-        Discativate();
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out IDamageable damageable))
+        public int Damage;
+
+        private void FixedUpdate()
         {
-            damageable.ApplyDamage(Damage);
-            //Destroy(gameObject);
+            rb.velocity = transform.right * speed;
+        }
+
+        private void OnBecameInvisible()
+        {
             Discativate();
         }
-    }
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.ApplyDamage(Damage);
+                //Destroy(gameObject);
+                Discativate();
+            }
+        }
 
-    private void Discativate()
-    {
-        gameObject.SetActive(false);
+        private void Discativate()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Score : MonoBehaviour
+namespace Internal.Scripts.UI
 {
-    [SerializeField] private TMP_Text scoreText;
+    public class Score : MonoBehaviour
+    {
+        [SerializeField] private TMP_Text scoreText;
 
-    public void ShowValue(int value)
-    { 
-        scoreText.text = value.ToString();
+        public void ShowValue(int value)
+        { 
+            scoreText.text = value.ToString();
+        }
     }
 }

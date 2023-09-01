@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class RangedEnemy : Enemy
+namespace Internal.Scripts.Enemyes
 {
-    protected override void PlayerApplyDamage()
+    public class RangedEnemy : Enemy
     {
+        protected override void PlayerApplyDamage()
+        {
         
+        }
     }
 }

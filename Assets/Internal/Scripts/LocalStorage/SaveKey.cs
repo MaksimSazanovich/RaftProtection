@@ -1,4 +1,7 @@
-public struct SaveKey
+namespace Internal.Scripts.LocalStorage
 {
-    public const string LevelIndex = "LevelIndex";
+    public struct SaveKey
+    {
+        public const string LevelIndex = "LevelIndex";
+    }
 }

@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public class wert : MonoBehaviour
+namespace Internal.Scripts
 {
-
-    void Start()
+    public class wert : MonoBehaviour
     {
 
-    }
+        void Start()
+        {
+
+        }
 
 
-    void Update()
-    {
+        void Update()
+        {
 
-    }
+        }
 
     
+    }
 }
     

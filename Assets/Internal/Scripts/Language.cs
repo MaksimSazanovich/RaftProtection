@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum Language
+namespace Internal.Scripts
 {
-    Eng,
-    Rus
+    public enum Language
+    {
+        Eng,
+        Rus
+    }
 }

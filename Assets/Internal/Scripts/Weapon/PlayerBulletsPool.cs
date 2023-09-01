@@ -1,46 +1,48 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBulletsPool : MonoBehaviour
+namespace Internal.Scripts.Weapon
 {
-    private readonly Dictionary<string, List<GameObject>> bullets = new Dictionary<string, List<GameObject>>();
-
-    public void AddBullets(GameObject bulletPrefab, int count)
+    public class PlayerBulletsPool : MonoBehaviour
     {
-        if (bullets.ContainsKey(bulletPrefab.name) == false)
-            bullets.Add(bulletPrefab.name, new List<GameObject>());
+        private readonly Dictionary<string, List<GameObject>> bullets = new Dictionary<string, List<GameObject>>();
 
-        for (int i = 0; i < count; i++)
+        public void AddBullets(GameObject bulletPrefab, int count)
         {
-            //var bullet = Instantiate(bulletPrefab, transform);
-            Create(bulletPrefab);
-        }
-    }
+            if (bullets.ContainsKey(bulletPrefab.name) == false)
+                bullets.Add(bulletPrefab.name, new List<GameObject>());
 
-    private GameObject Create(GameObject bulletPrefab)
-    {
-        var bullet = Instantiate(bulletPrefab, transform);
-        bullet.SetActive(false);
-        bullets[bulletPrefab.name].Add(bullet);
-
-        return bullet;
-    }
-
-    public GameObject GetBullet(GameObject bulletPrefab)
-    {
-        if (bullets.ContainsKey(bulletPrefab.name))
-        {
-            for (int i = 0; i < bullets.Count; i++)
+            for (int i = 0; i < count; i++)
             {
-                if (!bullets[bulletPrefab.name][i].activeInHierarchy)
-                    return bullets[bulletPrefab.name][i];
+                //var bullet = Instantiate(bulletPrefab, transform);
+                Create(bulletPrefab);
             }
+        }
+
+        private GameObject Create(GameObject bulletPrefab)
+        {
+            var bullet = Instantiate(bulletPrefab, transform);
+            bullet.SetActive(false);
+            bullets[bulletPrefab.name].Add(bullet);
+
+            return bullet;
+        }
+
+        public GameObject GetBullet(GameObject bulletPrefab)
+        {
+            if (bullets.ContainsKey(bulletPrefab.name))
+            {
+                for (int i = 0; i < bullets.Count; i++)
+                {
+                    if (!bullets[bulletPrefab.name][i].activeInHierarchy)
+                        return bullets[bulletPrefab.name][i];
+                }
+                return Create(bulletPrefab);
+            }
+            else
+                bullets.Add(bulletPrefab.name, new List<GameObject>());
+
             return Create(bulletPrefab);
         }
-        else
-            bullets.Add(bulletPrefab.name, new List<GameObject>());
-
-        return Create(bulletPrefab);
     }
 }

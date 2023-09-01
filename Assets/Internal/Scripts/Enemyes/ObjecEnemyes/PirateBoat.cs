@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PirateBoat : RangedEnemy
+namespace Internal.Scripts.Enemyes.ObjecEnemyes
 {
+    public class PirateBoat : RangedEnemy
+    {
 
+    }
 }

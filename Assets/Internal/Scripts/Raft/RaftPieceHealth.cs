@@ -1,23 +1,27 @@
+using Internal.Scripts.Enemyes;
 using UnityEngine;
 using Zenject;
 
-public class RaftPieceHealth : MonoBehaviour, IDamageable
+namespace Internal.Scripts.Raft
 {
-	private RaftHealth raftHealth;
-	[Inject]
-	private void Construct(RaftHealth raftHealth)
-	{ 
-		this.raftHealth = raftHealth;
-	}
-	public void ApplyDamage(int damageValue)
+	public class RaftPieceHealth : MonoBehaviour, IDamageable
 	{
-		Debug.Log("damageValue " + damageValue);
-		raftHealth.ApplyDamage(damageValue);
-	}
+		private RaftHealth raftHealth;
+		[Inject]
+		private void Construct(RaftHealth raftHealth)
+		{ 
+			this.raftHealth = raftHealth;
+		}
+		public void ApplyDamage(int damageValue)
+		{
+			Debug.Log("damageValue " + damageValue);
+			raftHealth.ApplyDamage(damageValue);
+		}
 
-	public void Die()
-	{
+		public void Die()
+		{
 		
-	}
+		}
 
+	}
 }

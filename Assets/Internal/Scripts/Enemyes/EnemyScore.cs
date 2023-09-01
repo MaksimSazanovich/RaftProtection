@@ -1,7 +1,7 @@
-using System;
-using UnityEngine;
-
-public class EnemyScore : ObjectScore
+namespace Internal.Scripts.Enemyes
 {
+    public class EnemyScore : ObjectScore.ObjectScore
+    {
 
+    }
 }

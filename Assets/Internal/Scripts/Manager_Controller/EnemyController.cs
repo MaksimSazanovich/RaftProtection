@@ -2,19 +2,22 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+namespace Internal.Scripts.Manager_Controller
 {
-    [SerializeField] private List<GameObject> _enemies;
-    public event Action OnEnemiesAreNull;
-
-    public void AddEnemy(GameObject enemy) => _enemies.Add(enemy);
-
-    public void RemoveEnemy()
+    public class EnemyController : MonoBehaviour
     {
-        _enemies.Remove(_enemies[_enemies.Count - 1]);
-        if (_enemies.Count <= 0)
-            OnEnemiesAreNull?.Invoke();
+        [SerializeField] private List<GameObject> _enemies;
+        public event Action OnEnemiesAreNull;
+
+        public void AddEnemy(GameObject enemy) => _enemies.Add(enemy);
+
+        public void RemoveEnemy()
+        {
+            _enemies.Remove(_enemies[_enemies.Count - 1]);
+            if (_enemies.Count <= 0)
+                OnEnemiesAreNull?.Invoke();
+        }
+
+
     }
-
-
 }

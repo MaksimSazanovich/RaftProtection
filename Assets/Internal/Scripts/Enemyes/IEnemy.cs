@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IEnemy 
+namespace Internal.Scripts.Enemyes
 {
+	public interface IEnemy 
+	{
 	
+	}
 }

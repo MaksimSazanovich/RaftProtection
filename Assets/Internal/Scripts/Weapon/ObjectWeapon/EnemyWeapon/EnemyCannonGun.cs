@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class EnemyCannonGun : EnemyGun
+namespace Internal.Scripts.Weapon.ObjectWeapon.EnemyWeapon
 {
+    public class EnemyCannonGun : EnemyGun
+    {
 
+    }
 }

@@ -1,18 +1,21 @@
-using AbyssMoth.Codebase.Infrastructure.Services.Storage;
+using Internal.Scripts.LocalStorage;
 using Zenject;
 
-public sealed class ServiceInstaller : MonoInstaller
+namespace Internal.Scripts.Zenject
 {
-    public override void InstallBindings() =>
-        BindServices();
-
-
-    private void BindServices()
+    public sealed class ServiceInstaller : MonoInstaller
     {
-        Container
-            .Bind<IStorageService>()
-            .To<JsonToFileStorageService>()
-            .AsSingle()
-            .NonLazy();
+        public override void InstallBindings() =>
+            BindServices();
+
+
+        private void BindServices()
+        {
+            Container
+                .Bind<IStorageService>()
+                .To<JsonToFileStorageService>()
+                .AsSingle()
+                .NonLazy();
+        }
     }
 }

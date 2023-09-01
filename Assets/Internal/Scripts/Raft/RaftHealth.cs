@@ -1,45 +1,49 @@
+using Internal.Scripts.Enemyes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RaftHealth : MonoBehaviour, IDamageable
+namespace Internal.Scripts.Raft
 {
-    [SerializeField] private float maxHealth;
-    public float Maxhealth { get => maxHealth; }
-    private static float health;
-    public float Health { get => health; }
-
-    private int sceneIndex;
-
-    private static bool maxHealthLock;
-    private void Start()
+    public class RaftHealth : MonoBehaviour, IDamageable
     {
-        maxHealthLock = true;
-        if (maxHealthLock)
+        [SerializeField] private float maxHealth;
+        public float Maxhealth { get => maxHealth; }
+        private static float health;
+        public float Health { get => health; }
+
+        private int sceneIndex;
+
+        private static bool maxHealthLock;
+        private void Start()
         {
-            health = maxHealth;
-            maxHealthLock = false;
+            maxHealthLock = true;
+            if (maxHealthLock)
+            {
+                health = maxHealth;
+                maxHealthLock = false;
+            }
+            sceneIndex = SceneManager.GetActiveScene().buildIndex;
         }
-        sceneIndex = SceneManager.GetActiveScene().buildIndex;
-    }
 
-    public void ApplyDamage(int damageValue)
-    {
-        health -= damageValue;
-        //animator.ChangeAnimationState(Names.Damage);
-
-        if (health <= 0)
+        public void ApplyDamage(int damageValue)
         {
-            Die();
+            health -= damageValue;
+            //animator.ChangeAnimationState(Names.Damage);
+
+            if (health <= 0)
+            {
+                Die();
+            }
         }
-    }
 
-    public void Die()
-    {
-        ReloadScene();
-    }
+        public void Die()
+        {
+            ReloadScene();
+        }
 
-    public void ReloadScene()
-    {
-        SceneManager.LoadScene(sceneIndex);
+        public void ReloadScene()
+        {
+            SceneManager.LoadScene(sceneIndex);
+        }
     }
 }

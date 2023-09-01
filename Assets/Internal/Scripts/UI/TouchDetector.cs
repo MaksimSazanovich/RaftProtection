@@ -1,31 +1,34 @@
 using System;
 using UnityEngine;
 
-public class TouchDetector : MonoBehaviour
+namespace Internal.Scripts.UI
 {
-    private Vector3 targetPosition;
-    private Camera cam;
-
-    public event Action<Vector3> OnTouch;
-
-    private void Start()
+    public class TouchDetector : MonoBehaviour
     {
-        cam = Camera.main;
-    }
-    private void Update()
-    {
+        private Vector3 targetPosition;
+        private UnityEngine.Camera cam;
 
-        if (Input.GetMouseButton(0))
+        public event Action<Vector3> OnTouch;
+
+        private void Start()
         {
-            SetTargetPosition();
+            cam = UnityEngine.Camera.main;
         }
-    }
+        private void Update()
+        {
 
-    private void SetTargetPosition()
-    {
-        targetPosition = cam.ScreenToWorldPoint(Input.mousePosition);
-        targetPosition.z = transform.position.z;
+            if (Input.GetMouseButton(0))
+            {
+                SetTargetPosition();
+            }
+        }
+
+        private void SetTargetPosition()
+        {
+            targetPosition = cam.ScreenToWorldPoint(Input.mousePosition);
+            targetPosition.z = transform.position.z;
         
-        OnTouch?.Invoke(targetPosition);
+            OnTouch?.Invoke(targetPosition);
+        }
     }
 }

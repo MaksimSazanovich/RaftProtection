@@ -1,64 +1,66 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolMono<T> where T : MonoBehaviour
+namespace Internal.Scripts
 {
-    public T Prefab { get; }
-    public bool AutoExpand { get; set; }
-    public Transform Container { get; }
-
-    private List<T> pool;
-
-    public PoolMono(T prefab, int count, Transform container)
+    public class PoolMono<T> where T : MonoBehaviour
     {
-        Prefab = prefab;
-        Container = container;
+        public T Prefab { get; }
+        public bool AutoExpand { get; set; }
+        public Transform Container { get; }
 
-        this.CreatePool(count);
-    }
+        private List<T> pool;
 
-    private void CreatePool(int count)
-    {
-        this.pool = new List<T>();
-
-        for (int i = 0; i < count; i++)
-            this.CreateObject();
-    }
-
-    private T CreateObject(bool isActiveByDefault = false)
-    {
-        var createdObject = UnityEngine.Object.Instantiate(Prefab, Container);
-        createdObject.gameObject.SetActive(isActiveByDefault);
-        this.pool.Add(createdObject);
-        return createdObject;
-    }
-
-    public bool HasFreeElement(out T element)
-    {
-        foreach (var mono in pool)
+        public PoolMono(T prefab, int count, Transform container)
         {
-            if (!mono.gameObject.activeInHierarchy)
-            {
-                element = mono;
-                mono.gameObject.SetActive(true);
-                return true;
-            }
+            Prefab = prefab;
+            Container = container;
+
+            this.CreatePool(count);
         }
 
-        element = null;
-        return false;
-    }
+        private void CreatePool(int count)
+        {
+            this.pool = new List<T>();
 
-    public T GetFreeElement()
-    {
-        if (this.HasFreeElement(out var element))
-            return element;
+            for (int i = 0; i < count; i++)
+                this.CreateObject();
+        }
 
-        if (AutoExpand)
-            return this.CreateObject(true);
+        private T CreateObject(bool isActiveByDefault = false)
+        {
+            var createdObject = UnityEngine.Object.Instantiate(Prefab, Container);
+            createdObject.gameObject.SetActive(isActiveByDefault);
+            this.pool.Add(createdObject);
+            return createdObject;
+        }
 
-        throw new Exception($"There is no free elements in pool of type {typeof(T)}");
+        public bool HasFreeElement(out T element)
+        {
+            foreach (var mono in pool)
+            {
+                if (!mono.gameObject.activeInHierarchy)
+                {
+                    element = mono;
+                    mono.gameObject.SetActive(true);
+                    return true;
+                }
+            }
+
+            element = null;
+            return false;
+        }
+
+        public T GetFreeElement()
+        {
+            if (this.HasFreeElement(out var element))
+                return element;
+
+            if (AutoExpand)
+                return this.CreateObject(true);
+
+            throw new Exception($"There is no free elements in pool of type {typeof(T)}");
+        }
     }
 }

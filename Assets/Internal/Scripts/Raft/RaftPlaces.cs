@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RaftPlaces : MonoBehaviour
+namespace Internal.Scripts.Raft
 {
-	private void Start()
+	public class RaftPlaces : MonoBehaviour
 	{
+		private void Start()
+		{
 		
-	}
+		}
 
-	private void Update()
-	{
+		private void Update()
+		{
 		
+		}
 	}
 }

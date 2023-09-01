@@ -1,6 +1,9 @@
-public enum EnemiesTypes
+namespace Internal.Scripts.Enemyes
 {
-    Piranha,
-    PirateBoat,
-    PirateShip
+    public enum EnemiesTypes
+    {
+        Piranha,
+        PirateBoat,
+        PirateShip
+    }
 }
