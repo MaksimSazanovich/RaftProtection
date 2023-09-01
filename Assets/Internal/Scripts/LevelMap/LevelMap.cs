@@ -31,6 +31,6 @@ namespace Internal.Scripts.LevelMap
         }
 
         private static void LoadGameScene(bool isSuccessSave) =>
-            SceneManager.LoadScene(GameScene);
+            SceneManager.LoadSceneAsync(GameScene);
     }
 }
