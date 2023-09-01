@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Internal.Scripts.LocalStorage;
 using UnityEngine;
@@ -26,11 +27,15 @@ namespace Internal.Scripts.LevelMap
 
         public void GetIndex(int index)
         {
+            progress.index = index;
+
             // Нужно сохранять не значение типа int "progress.index", а объект целиком "progress".
             storageService.Save(SaveKey.LevelIndex, progress, LoadGameScene);
+            
+            // Local Storage - C:\Users\UsersName\AppData\LocalLow\Blebagames\RaftProtection\Database -> LevelIndex
         }
 
-        private static void LoadGameScene(bool isSuccessSave) =>
+        private static void LoadGameScene(bool idSuccessSave) =>
             SceneManager.LoadSceneAsync(GameScene);
     }
 }
