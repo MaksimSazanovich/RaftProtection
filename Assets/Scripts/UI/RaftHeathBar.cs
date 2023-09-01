@@ -4,7 +4,7 @@ using Zenject;
 
 public class RaftHeathBar : MonoBehaviour
 {
-	private Image _healhBar;
+	[SerializeField] private Image _healhBar;
 	private RaftHealth _raftHealth;
 
 	[Inject]
@@ -14,7 +14,6 @@ public class RaftHeathBar : MonoBehaviour
 	}
 	private void Start()
 	{
-		_healhBar = GetComponent<Image>();
 		_healhBar.fillAmount = _raftHealth.Maxhealth;
 
     }

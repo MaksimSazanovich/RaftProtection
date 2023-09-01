@@ -1,3 +1,4 @@
+using AbyssMoth.Codebase.Infrastructure.Services.Storage;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -29,21 +30,31 @@ public class NewWaveSpawner : MonoBehaviour
     private int _currentGroupOfEnemies;
     public int CurrentGroupOfEnemies { get => _currentGroupOfEnemies; }
 
+    private IStorageService _storageService;
+    private Progress progress;
+
     [SerializeField] private GameObject[] _enemies;
 
     public event Action OnNextMiniWave;
     public event Action OnWaveEnd;
 
     [Inject]
-    private void Construct(DiContainer container, EnemyController enemyController, WaveTimerButton waveTimerButton)
+    private void Construct(DiContainer container, EnemyController enemyController, WaveTimerButton waveTimerButton, IStorageService storageService)
     {
         _container = container;
         _waveTimerButton = waveTimerButton;
+        _storageService = storageService;
         //_enemyController = enemyController;
     }
 
     private void Start()
     {
+        _storageService.Load<Progress>(SaveKey.LevelIndex, data =>
+        { 
+            progress = data ?? new Progress(0);
+            _currentLevel = progress.index;
+            Debug.Log(_currentLevel);
+        });
         StartCoroutine(SpawnEnemyInWave());
     }
 
