@@ -58,20 +58,25 @@ namespace Internal.Scripts.WaveSpawner
 
         private IStorageService _storageService;
         private Progress progress;
+        private LevelManager _levelManager;
+
+        [SerializeField] private bool canWaitSpawnDelay = true;
 
         [SerializeField] private GameObject[] _enemies;
 
         public event Action OnNextMiniWave;
         public event Action OnWaveEnd;
+        public event Action OnWin;
 
         [Inject]
         private void Construct(DiContainer container, EnemyController enemyController, WaveTimerButton waveTimerButton,
-            IStorageService storageService)
+            IStorageService storageService, LevelManager levelManager)
         {
             _container = container;
             _waveTimerButton = waveTimerButton;
             _storageService = storageService;
-            //_enemyController = enemyController;
+            _levelManager = levelManager;
+            _enemyController = enemyController;
         }
 
         private void Start()
@@ -88,16 +93,18 @@ namespace Internal.Scripts.WaveSpawner
 
         private void OnEnable()
         {
-            //_enemyController.OnEnemiesAreNull += LaunchWave;
+            _enemyController.OnEnemiesAreNull += TryFinishLevel;
             _waveTimerButton.OnTimerStart += LaunchWave;
             _waveTimerButton.OnTimerEnd += ResetSpawnDelay;
+            _levelManager.OnNextLevel += NextLevel;
         }
 
         private void OnDisable()
         {
-            //_enemyController.OnEnemiesAreNull -= LaunchWave;
+            _enemyController.OnEnemiesAreNull -= TryFinishLevel;
             _waveTimerButton.OnTimerStart -= LaunchWave;
             _waveTimerButton.OnTimerEnd -= ResetSpawnDelay;
+            _levelManager.OnNextLevel -= NextLevel;
         }
 
         private IEnumerator SpawnEnemyInWave()
@@ -105,11 +112,16 @@ namespace Internal.Scripts.WaveSpawner
             if (_currentMiniWave <=
                 _levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves.Length - 1)
             {
-                yield return new WaitForSeconds(_levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave]
-                    .MiniWaves[_currentMiniWave].SpawnDelay);
+                if (canWaitSpawnDelay)
+                {
+                    yield return new WaitForSeconds(_levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave]
+                        .MiniWaves[_currentMiniWave].SpawnDelay);
+                }
+                else yield return null;
+                
                 SpawnMiniWave();
                 Debug.Log("qwert");
-                StartCoroutine(SpawnEnemyInWave());
+                canWaitSpawnDelay = true;
             }
             else
             {
@@ -139,6 +151,7 @@ namespace Internal.Scripts.WaveSpawner
 
             OnNextMiniWave?.Invoke();
             _currentMiniWave++;
+            StartCoroutine(SpawnEnemyInWave());
         }
 
         private int GetEnemiesLeftToSpawn()
@@ -172,7 +185,7 @@ namespace Internal.Scripts.WaveSpawner
             _container.InstantiatePrefab(
                 GetEnemy(_levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves[_currentMiniWave]
                     .GroupOfEnemies[_currentGroupOfEnemies].Enemy), GetSpawnPosition(), Quaternion.identity, transform);
-            //_enemyController.AddEnemy(GetEnemy(_levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves[_currentMiniWave].GroupOfEnemies[_currentGroupOfEnemies].Enemy));
+            _enemyController.AddEnemy(GetEnemy(_levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves[_currentMiniWave].GroupOfEnemies[_currentGroupOfEnemies].Enemy));
         }
 
         private void LaunchWave()
@@ -186,14 +199,29 @@ namespace Internal.Scripts.WaveSpawner
                 _currentWave++;
                 StartCoroutine(SpawnEnemyInWave());
             }
-            else
+        }
+
+        private void TryFinishLevel()
+        {
+            if (_currentMiniWave == _levelMapConfig.LevelConfigs[_currentLevel].Waves[_currentWave].MiniWaves.Length &&
+                    _currentWave == _levelMapConfig.LevelConfigs[_currentLevel].Waves.Length - 1)
+            {
+                OnWin?.Invoke();
                 Debug.Log("<color=yellow>Victory!!!</color>");
+            }
+        }
+
+        private void NextLevel()
+        {
+            _currentLevel++;
+            _storageService.Save(SaveKey.LevelIndex, progress);
         }
 
         private void ResetSpawnDelay()
         {
-            StopCoroutine(SpawnEnemyInWave());
-            SpawnMiniWave();
+            // StopCoroutine(SpawnEnemyInWave());
+            // SpawnMiniWave();
+            canWaitSpawnDelay = false;
             Debug.Log("qwert");
         }
 

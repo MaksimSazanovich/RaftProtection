@@ -74,9 +74,9 @@ namespace Internal.Scripts.AI
                     nearestRaftPieceDistance = currentDistance;
                 }
             }
-            Debug.Log(nearestRaftPiece);
+            //Debug.Log(nearestRaftPiece);
             _targetPosition = nearestRaftPiece.position;
-            Debug.Log(_targetPosition);
+            //Debug.Log(_targetPosition);
 
             return nearestRaftPiece.position;
         }

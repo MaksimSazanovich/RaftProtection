@@ -1,6 +1,7 @@
 using Internal.Scripts.Manager_Controller;
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 namespace Internal.Scripts.Enemyes
 {
@@ -18,7 +19,7 @@ namespace Internal.Scripts.Enemyes
         [SerializeField] private UnityEvent OnApplyDamage;
 
 
-        //[SerializeField] protected float startSpeed;
+        [SerializeField] protected float startSpeed;
 
         [SerializeField] protected AI.AI ai;
 
@@ -26,13 +27,13 @@ namespace Internal.Scripts.Enemyes
 
         private EnemyController _enemyController;
 
-        //[Inject]
-        //private void Construct(EnemyController enemyController)
-        //{ 
-        //    _enemyController = enemyController;
-        //}
+        [Inject]
+        private void Construct(EnemyController enemyController)
+        {
+            _enemyController = enemyController;
+        }
 
- 
+
         protected virtual void Start()
         {
             health = maxHealth;
@@ -78,7 +79,7 @@ namespace Internal.Scripts.Enemyes
             ai.Speed = 0;
             GetComponent<BoxCollider2D>().enabled = false;
             OnHealthEnd.Invoke();
-            //_enemyController.RemoveEnemy();
+            _enemyController.RemoveEnemy();
             Destroy(gameObject, 0.1f);
             //StartCoroutine(CoroutineDie());
         }

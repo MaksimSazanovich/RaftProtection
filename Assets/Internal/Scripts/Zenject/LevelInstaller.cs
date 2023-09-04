@@ -17,6 +17,7 @@ namespace Internal.Scripts.Zenject
         [SerializeField] private WaveTimerButton _waveTimerButton;
         [SerializeField] private TouchDetector _touchDetector;
         [SerializeField] private Raft.Raft _raft;
+        [SerializeField] private LevelManager _levelManager;
 
         public override void InstallBindings()
         {
@@ -27,6 +28,7 @@ namespace Internal.Scripts.Zenject
             Container.Bind<NewWaveSpawner>().FromInstance(_waveSpawner).AsSingle();
             Container.Bind<WaveTimerButton>().FromInstance(_waveTimerButton).AsSingle();
             Container.Bind<TouchDetector>().FromInstance(_touchDetector).AsSingle();
+            Container.Bind<LevelManager>().FromInstance(_levelManager).AsSingle();
         }
     }
 }

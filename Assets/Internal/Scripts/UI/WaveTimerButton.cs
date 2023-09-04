@@ -51,11 +51,9 @@ namespace Internal.Scripts.UI
             {
                 int _nextWave = _waveSpawner.CurrentWave + 1;
                 _totalTime = _waveSpawner.LevelMapConfig.LevelConfigs[_waveSpawner.CurrentLevel].Waves[_nextWave].MiniWaves[0].SpawnDelay;
-                _button.gameObject.SetActive(true);
                 _timerCor = StartCoroutine(Timer());
-            }
-            else 
-                Debug.Log("<color=yellow>Victory!!!</color>");
+                _button.gameObject.SetActive(true);
+            }       
         }
 
         private void FinishTimer()

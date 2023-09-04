@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Internal.Scripts.LocalStorage;
 using UnityEngine;
@@ -35,7 +34,7 @@ namespace Internal.Scripts.LevelMap
             // Local Storage - C:\Users\UsersName\AppData\LocalLow\Blebagames\RaftProtection\Database -> LevelIndex
         }
 
-        private static void LoadGameScene(bool idSuccessSave) =>
+        private static void LoadGameScene(bool isSuccessSave) =>
             SceneManager.LoadSceneAsync(GameScene);
     }
 }

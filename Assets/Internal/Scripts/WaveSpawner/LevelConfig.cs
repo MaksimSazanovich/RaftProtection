@@ -34,7 +34,7 @@ namespace Internal.Scripts.WaveSpawner
         [SerializeField] private EnemiesTypes _enemy;
         public EnemiesTypes Enemy { get => _enemy; }
 
-        [SerializeField] private int _count;
+        [SerializeField] private int _count = 1;
         public int Count { get => _count; }
     }
 }
