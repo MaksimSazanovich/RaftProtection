@@ -1,3 +1,4 @@
+using System;
 using Internal.Scripts.Enemyes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,6 +15,8 @@ namespace Internal.Scripts.Raft
         private int sceneIndex;
 
         private static bool maxHealthLock;
+
+        public event Action OnDie;
         private void Start()
         {
             maxHealthLock = true;
@@ -38,12 +41,7 @@ namespace Internal.Scripts.Raft
 
         public void Die()
         {
-            ReloadScene();
-        }
-
-        public void ReloadScene()
-        {
-            SceneManager.LoadScene(sceneIndex);
+            OnDie?.Invoke();
         }
     }
 }
