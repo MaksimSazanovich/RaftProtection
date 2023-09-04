@@ -67,6 +67,7 @@ namespace Internal.Scripts.WaveSpawner
         public event Action OnNextMiniWave;
         public event Action OnWaveEnd;
         public event Action OnWin;
+        public event Action OnNextLevel;
 
         [Inject]
         private void Construct(DiContainer container, EnemyController enemyController, WaveTimerButton waveTimerButton,
@@ -211,10 +212,12 @@ namespace Internal.Scripts.WaveSpawner
             }
         }
 
-        private void NextLevel()
+        public void NextLevel()
         {
             _currentLevel++;
+            progress.index = _currentLevel;
             _storageService.Save(SaveKey.LevelIndex, progress);
+            OnNextLevel?.Invoke();
         }
 
         private void ResetSpawnDelay()
